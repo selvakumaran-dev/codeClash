@@ -1,0 +1,330 @@
+@import "tailwindcss";
+
+:root {
+  /* Dark Mode (Default) */
+  --bg-void: #0f172a;
+  --bg-panel: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent-neon: #00dda5;
+  --accent-chaos: #d946ef;
+  --border-subtle: #334155;
+
+  /* Shadows */
+  --shadow-neon: 0 0 20px -5px rgba(0, 221, 165, 0.3);
+  --shadow-chaos: 0 0 20px -5px rgba(217, 70, 239, 0.3);
+  --shadow-panel: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+
+  /* Grid Color */
+  --grid-color: rgba(255, 255, 255, 0.03);
+
+  /* Nav Glass */
+  --nav-glass-bg: rgba(15, 23, 42, 0.6);
+  --nav-glass-border: rgba(255, 255, 255, 0.05);
+}
+
+:root.light {
+  /* Light Mode Overrides */
+  --bg-void: #f0f9ff;
+  /* Very Light Blue/White */
+  --bg-panel: #ffffff;
+  /* Pure White */
+  --text-primary: #0f172a;
+  /* Dark Slate */
+  --text-secondary: #475569;
+  /* Medium Slate */
+  --accent-neon: #0d9488;
+  /* Teal (Darker than neon for contrast) */
+  --accent-chaos: #c026d3;
+  /* Darker Pink */
+  --border-subtle: #cbd5e1;
+  /* Light Grey */
+
+  /* Light Mode Shadows */
+  --shadow-neon: 0 0 15px -3px rgba(13, 148, 136, 0.25);
+  --shadow-chaos: 0 0 15px -3px rgba(192, 38, 211, 0.25);
+  --shadow-panel: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+
+  /* Grid Color Light */
+  --grid-color: rgba(0, 0, 0, 0.05);
+
+  /* Nav Glass Light */
+  --nav-glass-bg: rgba(255, 255, 255, 0.8);
+  --nav-glass-border: rgba(0, 0, 0, 0.1);
+}
+
+@theme {
+  /* Mapping Tailwind Theme to CSS Variables */
+  --color-bg-void: var(--bg-void);
+  --color-bg-panel: var(--bg-panel);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-accent-neon: var(--accent-neon);
+  --color-accent-chaos: var(--accent-chaos);
+  --color-border-subtle: var(--border-subtle);
+
+  /* Fonts */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Shadows */
+  --shadow-neon: var(--shadow-neon);
+  --shadow-chaos: var(--shadow-chaos);
+  --shadow-panel: var(--shadow-panel);
+
+  /* Animation Utilities */
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes glitch-skew {
+    0% {
+      transform: skew(0deg);
+    }
+
+    20% {
+      transform: skew(-2deg);
+    }
+
+    40% {
+      transform: skew(2deg);
+    }
+
+    60% {
+      transform: skew(-1deg);
+    }
+
+    80% {
+      transform: skew(1deg);
+    }
+
+    100% {
+      transform: skew(0deg);
+    }
+  }
+
+  @keyframes aurora {
+    0% {
+      background-position: 50% 50%, 50% 50%;
+    }
+
+    100% {
+      background-position: 350% 50%, 350% 50%;
+    }
+  }
+
+  @keyframes text-shine {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes shake {
+
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+      transform: translateX(-10px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+      transform: translateX(10px);
+    }
+  }
+
+  @keyframes randomScroll {
+    0% {
+      transform: translateY(0);
+    }
+
+    25% {
+      transform: translateY(-20px);
+    }
+
+    50% {
+      transform: translateY(10px);
+    }
+
+    75% {
+      transform: translateY(-15px);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-aurora: aurora 60s linear infinite;
+  --animate-text-shine: text-shine 3s linear infinite;
+  --animate-glitch: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+}
+
+/* Base Styles */
+@layer base {
+  body {
+    background-color: var(--color-bg-void);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: -0.025em;
+    /* Tight typography like Linear */
+  }
+}
+
+/* Component Classes */
+@layer components {
+
+  /* The "Gunmetal" Panel */
+  .panel-professional {
+    background-color: var(--color-bg-panel);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 0.75rem;
+    /* 12px rounded */
+    box-shadow: var(--shadow-panel);
+  }
+
+  /* Navbar Glass - Premium */
+  .nav-glass {
+    background-color: var(--nav-glass-bg);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--nav-glass-border);
+  }
+
+  /* Primary Neon Button - Premium */
+  .btn-neon {
+    background-image: linear-gradient(to bottom right, #00dda5, #00cba0);
+    color: #0f172a;
+    /* Void Blue text for contrast */
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+      0 4px 12px rgba(0, 221, 165, 0.2);
+  }
+
+  .btn-neon::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .btn-neon:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+      0 8px 24px rgba(0, 221, 165, 0.3);
+  }
+
+  .btn-neon:hover::after {
+    opacity: 1;
+  }
+
+  /* Chaos/Sabotage Button */
+  .btn-chaos {
+    background-color: rgba(217, 70, 239, 0.1);
+    color: var(--color-accent-chaos);
+    border: 1px solid var(--color-accent-chaos);
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+  }
+
+  .btn-chaos:hover {
+    background-color: var(--color-accent-chaos);
+    color: white;
+    box-shadow: var(--shadow-chaos);
+  }
+}
+
+/* Utilities */
+@layer utilities {
+  .text-neon {
+    color: var(--color-accent-neon);
+  }
+
+  .text-chaos {
+    color: var(--color-accent-chaos);
+  }
+
+  .grid-pattern {
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center top;
+    mask-image: linear-gradient(to bottom, black 40%, transparent 90%);
+  }
+
+  .bg-aurora {
+    background-image:
+      radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(232, 121, 249, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(0, 221, 165, 0.1) 0px, transparent 50%);
+    filter: blur(60px);
+  }
+
+  .animate-shake {
+    animation: shake 0.5s ease-in-out;
+  }
+}
+
+/* Custom Scrollbar - Minimal */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-subtle);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}

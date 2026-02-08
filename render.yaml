@@ -1,0 +1,17 @@
+services:
+  # Main Web Service (Backend + Frontend)
+  - type: web
+    name: codeclash
+    runtime: node
+    plan: free  # Change to 'starter' or 'standard' for production
+    buildCommand: npm install && npm run build && cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PISTON_API_URL
+        value: https://emkc.org/api/v2/piston
+      - key: CORS_ORIGIN
+        sync: false  # Set manually in Render dashboard after first deploy
+    healthCheckPath: /api/health
+    autoDeploy: true
