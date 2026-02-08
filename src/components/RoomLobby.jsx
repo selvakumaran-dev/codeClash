@@ -39,7 +39,8 @@ const RoomLobby = ({ onJoinRoom, onSpectate }) => {
     useEffect(() => {
         const fetchRooms = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/rooms');
+                const API_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3001';
+                const response = await fetch(`${API_URL}/api/rooms`);
                 const data = await response.json();
 
                 // Transform backend data to match UI format
