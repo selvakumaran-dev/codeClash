@@ -277,11 +277,13 @@ const BattleArena = ({ roomData, playerRole, onLeave }) => {
         };
 
         const handleGameOver = (data) => {
-            console.log('[GAME OVER]', data);
+            console.log('[GAME OVER] Data received:', data);
+            console.log('[GAME OVER] Current player role:', playerRole);
+            console.log('[GAME OVER] Winner:', data.winner);
 
-            // Determine if current player won
-            const didWin = data.winner === playerRole;
+            // CRITICAL FIX: Determine if current player won by comparing roles
             const isDraw = data.winner === 'draw';
+            const didWin = !isDraw && data.winner === playerRole;
 
             let title = '🏆 Game Over!';
             let message = data.winReason || 'Time expired';
@@ -662,7 +664,7 @@ const BattleArena = ({ roomData, playerRole, onLeave }) => {
                                 onChange={handleCodeChange}
                                 theme="vs-dark"
                                 options={{
-                                    fontSize: 13,
+                                    fontSize: isMobile ? 12 : 13,
                                     minimap: { enabled: false },
                                     scrollBeyondLastLine: false,
                                     wordWrap: 'on',
@@ -670,7 +672,16 @@ const BattleArena = ({ roomData, playerRole, onLeave }) => {
                                     lineNumbers: 'on',
                                     renderWhitespace: 'selection',
                                     tabSize: 2,
-                                    padding: { top: 10 }
+                                    padding: { top: 10 },
+                                    // Mobile performance optimizations
+                                    quickSuggestions: !isMobile,
+                                    suggestOnTriggerCharacters: !isMobile,
+                                    parameterHints: { enabled: !isMobile },
+                                    hover: { enabled: !isMobile },
+                                    folding: !isMobile,
+                                    renderLineHighlight: isMobile ? 'none' : 'all',
+                                    occurrencesHighlight: !isMobile,
+                                    smoothScrolling: !isMobile
                                 }}
                                 onMount={(editor) => {
                                     editorRef.current = editor;
@@ -905,6 +916,24 @@ const BattleArena = ({ roomData, playerRole, onLeave }) => {
                 .cursor-none * {
                     cursor: none !important;
                     caret-color: transparent !important;
+                }
+                
+                /* Mobile performance optimizations */
+                @media (max-width: 768px) {
+                    * {
+                        -webkit-tap-highlight-color: transparent;
+                    }
+                    
+                    .monaco-editor {
+                        will-change: scroll-position;
+                    }
+                    
+                    /* Reduce animation complexity on mobile */
+                    @media (prefers-reduced-motion: no-preference) {
+                        .animate-shake {
+                            animation-duration: 0.3s;
+                        }
+                    }
                 }
             `}</style>
             </div>

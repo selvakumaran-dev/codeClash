@@ -375,14 +375,29 @@ const RoomLobby = ({ onJoinRoom, onSpectate }) => {
                                                 </label>
                                                 <input
                                                     type="number"
+                                                    inputMode="numeric"
+                                                    pattern="[0-9]*"
                                                     min="1"
                                                     max="60"
                                                     value={customChallenge.timeLimit / 60}
                                                     onChange={(e) => {
-                                                        const minutes = parseInt(e.target.value) || 5;
+                                                        const value = e.target.value;
+                                                        // Allow empty input while typing
+                                                        if (value === '') {
+                                                            setCustomChallenge({ ...customChallenge, timeLimit: 300 });
+                                                            return;
+                                                        }
+                                                        const minutes = Math.max(1, Math.min(60, parseInt(value) || 5));
                                                         setCustomChallenge({ ...customChallenge, timeLimit: minutes * 60 });
                                                     }}
-                                                    className="w-full px-6 py-4 bg-text-primary/5 border border-text-primary/10 rounded-xl text-text-primary focus:border-accent-neon focus:outline-none transition-colors"
+                                                    onBlur={(e) => {
+                                                        // Ensure valid value on blur
+                                                        const value = e.target.value;
+                                                        if (value === '' || parseInt(value) < 1) {
+                                                            setCustomChallenge({ ...customChallenge, timeLimit: 300 });
+                                                        }
+                                                    }}
+                                                    className="w-full px-6 py-4 bg-text-primary/5 border border-text-primary/10 rounded-xl text-text-primary focus:border-accent-neon focus:outline-none transition-colors text-center text-lg font-mono"
                                                 />
                                             </div>
                                         </div>
