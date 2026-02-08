@@ -648,6 +648,22 @@ function startGameTimer(roomId) {
 }
 
 // ==================== REST API ====================
+
+// Root endpoint - API information
+app.get('/', (req, res) => {
+    res.json({
+        name: 'CodeClash API',
+        version: '2.0.0',
+        status: 'running',
+        endpoints: {
+            health: '/api/health',
+            rooms: '/api/rooms',
+            websocket: 'Socket.IO enabled'
+        },
+        documentation: 'Connect via WebSocket for real-time features'
+    });
+});
+
 app.get('/api/health', (req, res) => {
     res.json({
         status: 'ok',
