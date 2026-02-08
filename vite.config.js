@@ -5,6 +5,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: './', // Use relative paths for assets (fixes Render Static Site deployment)
   plugins: [
     react(),
     tailwindcss(),
